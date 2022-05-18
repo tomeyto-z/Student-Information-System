@@ -24,10 +24,10 @@ class HomePage(Frame):
                         fill="#FFFFFF", font=("LexendDeca ExtraLight", 50 * -1))
 
         # creating button for faculty
-        self.imgFaculty = PhotoImage(file=self.relative_to_assets("btnFaculty.png"))
-        btnFaculty = Button(self, image=self.imgFaculty, borderwidth=0, highlightthickness=0, 
-                        command=lambda: controller.show_frame("SignInPage", "faculty"), relief="flat")
-        btnFaculty.place(x=491.0, y=432.0, width=300.0, height=45.0)
+        self.imgAdmin = PhotoImage(file=self.relative_to_assets("btnAdmin.png"))
+        btnAdmin = Button(self, image=self.imgAdmin, borderwidth=0, highlightthickness=0, 
+                        command=lambda: controller.show_frame("SignInPage", "admin"), relief="flat")
+        btnAdmin.place(x=491.0, y=432.0, width=300.0, height=45.0)
 
         # creating button for student
         self.imgStudent = PhotoImage(file=self.relative_to_assets("btnStudent.png"))

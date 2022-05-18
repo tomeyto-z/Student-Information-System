@@ -73,7 +73,7 @@ class SignInPage(Frame):
         if controller.id == "student":
             controller.show_frame("StudentMenu")
         else:
-            controller.show_frame("FacultyMenu")
+            controller.show_frame("AdminMenu")
 
     # clearing entry inputs
     def clear_text(self):

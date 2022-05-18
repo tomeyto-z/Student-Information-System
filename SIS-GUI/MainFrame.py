@@ -4,7 +4,7 @@ from HomePage import HomePage as hp
 from SignUpPage import SignUpPage as sup
 from SignInPage import SignInPage as sip
 from StudentMenu import StudentMenu as sm
-from FacultyMenu import FacultyMenu as fm
+from AdminMenu import AdminMenu as am
 
 # class for the main frame
 class MainFrame(Tk):
@@ -26,7 +26,7 @@ class MainFrame(Tk):
         # looping in every page/class and creating an object of it
         # then storing the class name as the key 
         # and the object of it as the value 
-        for f in {hp.HomePage, sup.SignUpPage, sip.SignInPage, sm.StudentMenu, fm.FacultyMenu}:
+        for f in {hp.HomePage, sup.SignUpPage, sip.SignInPage, sm.StudentMenu, am.AdminMenu}:
             page_name = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
