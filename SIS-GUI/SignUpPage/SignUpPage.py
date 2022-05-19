@@ -81,14 +81,14 @@ class SignUpPage(Frame):
 
     # creating an account
     def to_sign_up(self, controller):
-        self.clear_text()
         if controller.id == "student":
             filename = "Student_Credentials.txt"
             email = str(self.entry1.get())
             pwd = str(self.entry2.get())
             confirm_pwd = str(self.entry3.get())
-
+            self.clear_text()
             sign_up = account.signup(filename, email, pwd, confirm_pwd)
+
 
             if sign_up == 1:  # You have registered successfully!
                 self.response = Label(self.canvas,
@@ -116,11 +116,11 @@ class SignUpPage(Frame):
                                       font=("LexendDeca Regular", 16 * -1)).place(x=540, y=207)
 
         else:
-            filename = "Student_Credentials.txt"
+            filename = "Admin_Credentials.txt"
             email = str(self.entry1.get())
             pwd = str(self.entry2.get())
             confirm_pwd = str(self.entry3.get())
-
+            self.clear_text()
             sign_up = account.signup(filename, email, pwd, confirm_pwd)
 
             if sign_up == 1:  # You have registered successfully!

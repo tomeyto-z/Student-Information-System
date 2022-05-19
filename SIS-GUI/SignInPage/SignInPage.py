@@ -62,7 +62,7 @@ class SignInPage(Frame):
         # creating sign up button
         self.imgSignUp = PhotoImage(file=self.relative_to_assets("btnSignUp.png"))
         btnSignUp = Button(self, image=self.imgSignUp, borderwidth=0, highlightthickness=0,
-                           command=lambda: controller.show_frame("SignUpPage", controller.id), relief="flat")
+                           command=lambda: controller.show_frame("SignUpPage"), relief="flat")
         btnSignUp.place(x=731.0, y=551.0, width=63.0, height=25.0)
 
     # for the path to be right
@@ -71,12 +71,13 @@ class SignInPage(Frame):
 
     # transition to the right menu
     def to_menu(self, controller):
-        self.clear_text()
         if controller.id == "student":
             filename = "Student_Credentials.txt"
             email = str(self.entry1.get())
             password = str(self.entry2.get())
+            self.clear_text()
             sign_in = account.login(filename, email, password)
+
 
             if sign_in == 1:  # Logged in successfully
                 response = Label(self.canvas,
@@ -109,6 +110,7 @@ class SignInPage(Frame):
             filename = "Admin_Credentials.txt"
             email = str(self.entry1.get())
             password = str(self.entry2.get())
+            self.clear_text()
             sign_in = account.login(filename, email, password)
 
             if sign_in == 1:  # Logged in successfully

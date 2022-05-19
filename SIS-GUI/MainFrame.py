@@ -6,6 +6,7 @@ from SignInPage import SignInPage as sip
 from StudentMenu import StudentMenu as sm
 from AdminMenu import AdminMenu as am
 
+
 # class for the main frame
 class MainFrame(Tk):
     # init method of the class MainFrame
@@ -15,9 +16,9 @@ class MainFrame(Tk):
 
         # creating a container for all
         container = Frame(self)
-        container.pack(side = "top", fill = "both", expand = True)
-        container.grid_rowconfigure(0, weight = 1)
-        container.grid_columnconfigure(0, weight = 1)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
 
         # creating a dictionary of page objects and id for menu
         self.frames = {}
@@ -35,7 +36,7 @@ class MainFrame(Tk):
         self.show_frame("HomePage")
 
     # showing the current frame above everything
-    def show_frame(self, page_name, id = None):
+    def show_frame(self, page_name, id=None):
         self.id = id
         frame = self.frames[page_name]
         frame.tkraise()
