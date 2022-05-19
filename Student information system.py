@@ -1,3 +1,4 @@
+#This is the console application
 import csv
 import hashlib
 import os
