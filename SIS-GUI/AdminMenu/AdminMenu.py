@@ -8,8 +8,7 @@ class AdminMenu(Frame):
     # constants
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("./assets")
-    current_image = None
-    current_button = None
+    current_btn, current_img = None, None
 
     # admin menu class init method
     def __init__(self, parent, controller):
@@ -28,63 +27,63 @@ class AdminMenu(Frame):
         self.create_frames()
 
         # creating the whole canvas of the frame
-        canvas = Canvas(self, bg = "#093545", height = 720, width = 1280, bd = 0, highlightthickness = 0, relief = "ridge")
-        canvas.place(x = 0, y = 0)
+        self.canvas = Canvas(self, bg = "#093545", height = 720, width = 1280, bd = 0, highlightthickness = 0, relief = "ridge")
+        self.canvas.place(x = 0, y = 0)
 
         # creating the bottom image for design
         self.curvy = PhotoImage(file=self.relative_to_assets("curvy.png"))
-        canvas.create_image(640.0, 664.0, image=self.curvy)
+        self.canvas.create_image(640.0, 664.0, image=self.curvy)
 
         # creating panel menu
-        canvas.create_rectangle(0.0, 0.0, 293.0, 720.0, fill="#214D5E", outline="")
+        self.canvas.create_rectangle(0.0, 0.0, 293.0, 720.0, fill="#214D5E", outline="")
 
         # creating delete students button
         self.imgDelete = PhotoImage(file=self.relative_to_assets("btnDelete.png"))
-        btnDelete = Button(self, image=self.imgDelete, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("DeleteStudent"), relief="flat")
+        btnDelete = Button(self.canvas, image=self.imgDelete, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("DeleteStudent", btnDelete, self.imgDelete), relief="flat")
         btnDelete.place(x=41.0, y=439.0, width=212.0, height=46.0)
 
         # creating update students button
         self.imgUpdate = PhotoImage(file=self.relative_to_assets("btnUpdate.png"))
-        btnUpdate = Button(self, image=self.imgUpdate, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("UpdateStudent"), relief="flat")
+        btnUpdate = Button(self.canvas, image=self.imgUpdate, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("UpdateStudent", btnUpdate, self.imgUpdate), relief="flat")
         btnUpdate.place(x=41.0, y=375.0, width=212.0, height=46.0)
 
         # creating search students button
         self.imgSearch = PhotoImage(file=self.relative_to_assets("btnSearch.png"))
-        btnSearch = Button(self, image=self.imgSearch, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("SearchStudent"), relief="flat")
+        btnSearch = Button(self.canvas, image=self.imgSearch, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("SearchStudent", btnSearch, self.imgSearch), relief="flat")
         btnSearch.place(x=41.0, y=311.0, width=212.0, height=46.0)
 
         # creating view students button
         self.imgView = PhotoImage(file=self.relative_to_assets("btnView.png"))
-        btnView = Button(self, image=self.imgView, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("ViewStudent"), relief="flat")
+        btnView = Button(self.canvas, image=self.imgView, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("ViewStudent", btnView, self.imgView), relief="flat")
         btnView.place(x=41.0, y=247.0, width=212.0, height=46.0)
 
         # creating add students button
         self.imgAdd = PhotoImage(file=self.relative_to_assets("btnAdd.png"))
-        self.btnAdd = Button(self, image=self.imgAdd, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("AddStudent", self.btnAdd), relief="flat")
-        self.btnAdd.place(x=41.0, y=182.0, width=212.0, height=46.0)
+        btnAdd = Button(self.canvas, image=self.imgAdd, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("AddStudent", btnAdd, self.imgAdd), relief="flat")
+        btnAdd.place(x=41.0, y=182.0, width=212.0, height=46.0)
 
         # creating menu label
-        canvas.create_text(116.0, 139.0, anchor="nw", text="MENU", 
+        self.canvas.create_text(116.0, 139.0, anchor="nw", text="MENU", 
                         fill="#FFFFFF", font=("LexendDeca Regular", 20 * -1))
 
         # creating quit button
-        self.imgQuit = PhotoImage(file=self.relative_to_assets("btnQuit.png"))
-        btnQuit = Button(self, image=self.imgQuit, borderwidth=0, highlightthickness=0,
-                    command=lambda: controller.show_frame("HomePage"), relief="flat")
-        btnQuit.place(x=41.0, y=665.0, width=90.0, height=27.0)
+        self.imgLogout = PhotoImage(file=self.relative_to_assets("btnLogout.png"))
+        btnLogout = Button(self.canvas, image=self.imgLogout, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.to_home_page(controller), relief="flat")
+        btnLogout.place(x=41.0, y=665.0, width=90.0, height=27.0)
 
         # creating SIS label
-        canvas.create_text(355.0, 35.0, anchor="nw", text="Student Management System", 
+        self.canvas.create_text(355.0, 35.0, anchor="nw", text="Student Management System", 
                         fill="#FFFFFF", font=("LexendDeca Regular", 36 * -1))
 
         # creating students image bottom right
         self.imgStudents = PhotoImage(file=self.relative_to_assets("imgStudents.png"))
-        canvas.create_image(1085.0, 509.0, image=self.imgStudents)
+        self.canvas.create_image(1085.0, 509.0, image=self.imgStudents)
 
     # for the path to be right
     def relative_to_assets(self, path: str) -> Path:
@@ -99,18 +98,41 @@ class AdminMenu(Frame):
             frame.grid(row=0, column=0, sticky="NSEW")
             self.frames[frame_name] = frame
 
+    # returning back to homepage
+    def to_home_page(self, controller):
+        self.reset_button_state()
+        self.frames["AddStudent"].response.place_forget()
+        self.canvas.tk.call("raise", self.canvas._w)
+        controller.show_frame("HomePage")
+
     # showing the called frame on top of everything
-    def show_option(self, frame_name, button = None):
-        self.button_clicked(frame_name, button)
+    def show_option(self, frame_name, button, image):
+        self.button_clicked(frame_name, button, image)
         self.container.tkraise()
-        frame = self.frames[frame_name]
-        frame.tkraise()
+        self.frames[frame_name].tkraise()
 
-    # change button color when clicked
-    def button_clicked(self, option_name, current_btn):
-        # self.current_button = current_btn
-        # self.
+    # change button appearance when clicked
+    def button_clicked(self, fname, new_btn, new_img):
+        # assign the current image and button
+        self.reset_button_state()
+        self.current_img = new_img
+        self.current_btn = new_btn
 
-        if option_name == "AddStudent":
-            self.imgAdd = PhotoImage(file=self.relative_to_assets("btnAddCv.png"))
-            self.btnAdd.configure(image=self.imgAdd)
+        # change the button image corresponding to the button clicked
+        if fname == "AddStudent":
+            self.clicked_img = PhotoImage(file=self.relative_to_assets("btnAddCv.png"))
+        elif fname == "ViewStudent":
+            self.clicked_img = PhotoImage(file=self.relative_to_assets("btnViewCv.png"))
+        elif fname == "SearchStudent":
+            self.clicked_img = PhotoImage(file=self.relative_to_assets("btnSearchCv.png"))
+        elif fname == "UpdateStudent":
+            self.clicked_img = PhotoImage(file=self.relative_to_assets("btnUpdateCv.png"))
+        elif fname == "DeleteStudent":
+            self.clicked_img = PhotoImage(file=self.relative_to_assets("btnDeleteCv.png"))
+        self.current_btn.configure(image=self.clicked_img)
+
+    # reset the current button image
+    def reset_button_state(self):
+        if self.current_btn != None and self.current_img != None:
+            self.current_btn.configure(image=self.current_img)
+        
