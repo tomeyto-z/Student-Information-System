@@ -26,7 +26,8 @@ def signup(filename, email, pwd, confirm_pwd):
 
 # database management for login
 def login(filename, email, pwd):
-    file = open(filename, "a+")
+    file = open(filename, "a")
+    file = open(filename, "r")
     
     # if file is not empty
     if os.path.getsize(filename) > 0:
