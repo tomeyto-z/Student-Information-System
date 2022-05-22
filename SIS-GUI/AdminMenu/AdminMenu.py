@@ -8,6 +8,8 @@ class AdminMenu(Frame):
     # constants
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("./assets")
+    current_image = None
+    current_button = None
 
     # admin menu class init method
     def __init__(self, parent, controller):
@@ -62,9 +64,9 @@ class AdminMenu(Frame):
 
         # creating add students button
         self.imgAdd = PhotoImage(file=self.relative_to_assets("btnAdd.png"))
-        btnAdd = Button(self, image=self.imgAdd, borderwidth=0, highlightthickness=0,
-                    command=lambda: self.show_option("AddStudent"), relief="flat")
-        btnAdd.place(x=41.0, y=182.0, width=212.0, height=46.0)
+        self.btnAdd = Button(self, image=self.imgAdd, borderwidth=0, highlightthickness=0,
+                    command=lambda: self.show_option("AddStudent", self.btnAdd), relief="flat")
+        self.btnAdd.place(x=41.0, y=182.0, width=212.0, height=46.0)
 
         # creating menu label
         canvas.create_text(116.0, 139.0, anchor="nw", text="MENU", 
@@ -98,7 +100,17 @@ class AdminMenu(Frame):
             self.frames[frame_name] = frame
 
     # showing the called frame on top of everything
-    def show_option(self, frame_name):
+    def show_option(self, frame_name, button = None):
+        self.button_clicked(frame_name, button)
         self.container.tkraise()
         frame = self.frames[frame_name]
         frame.tkraise()
+
+    # change button color when clicked
+    def button_clicked(self, option_name, current_btn):
+        # self.current_button = current_btn
+        # self.
+
+        if option_name == "AddStudent":
+            self.imgAdd = PhotoImage(file=self.relative_to_assets("btnAddCv.png"))
+            self.btnAdd.configure(image=self.imgAdd)
