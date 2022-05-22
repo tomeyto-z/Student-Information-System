@@ -1,6 +1,6 @@
 from tkinter import *
 from pathlib import Path
-# from addStudent import add
+from database import add
 
 
 class AddStudent(Frame):
@@ -98,9 +98,10 @@ class AddStudent(Frame):
 
         # if all entries are filled
         if entry_count == 6:
-            # add(student_data)
+            add.add(student_data)
             self.response.configure(text="Data successfully saved!", fg="#52EFA0")
             self.response.place_configure(x=402, y=107)
+
         # if not all entries are filled
         else:
             self.response.configure(text="Insufficient data!", fg="#F04C42")
