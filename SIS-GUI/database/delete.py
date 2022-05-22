@@ -10,7 +10,7 @@ def delete(student_number):
     student_found = False
     updated_data = []
 
-    # if the file already exist
+    # if the file already exist and file is not empty
     if os.path.exists(student_database) and os.path.getsize(student_database) > 0:
         with open(student_database, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
