@@ -1,6 +1,6 @@
 from tkinter import *
 from pathlib import Path
-from addStudent import add
+from database import add
 
 
 class AddStudent(Frame):
@@ -102,11 +102,11 @@ class AddStudent(Frame):
         self.clear_text()
 
         for values in student_data:
-            if values is not None:
+            if len(values) is not 0:
                 count += 1
 
         if count == 6:
-            add(student_data)
+            add.add(student_data)
             self.response.configure(text="Data successfully saved!", fg="#52EFA0")
             self.response.place_configure(x=690, y=107)
 
