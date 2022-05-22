@@ -1,8 +1,6 @@
 # DATABASE TO DELETE STUDENTS
-
 import os
 import csv
-
 
 # di ko na alam paano paikliin to HAHHAHAHAHAHA if ever na maiikli pa go lang
 def delete(student_number):
@@ -12,25 +10,22 @@ def delete(student_number):
 
     # if the file already exist and file is not empty
     if os.path.exists(student_database) and os.path.getsize(student_database) > 0:
-        with open(student_database, "r", encoding="utf-8") as f:
-            reader = csv.reader(f)
+        with open(student_database, "r") as file:
+            reader = csv.reader(file)
 
+            # skip student if found in the row
             for row in reader:
-                if len(row) > 0 and student_number != row[0]:
-                    updated_data.append(row)
-                else:
+                if student_number == row[0]:
                     student_found = True
+                else:
+                    updated_data.append(row)
 
-        if student_found is True:
-            with open(student_database, "w", encoding="utf-8") as f:
-                writer = csv.writer(f)
+        # rewrite the file without the skipped student
+        if student_found:
+            with open(student_database, "w", newline="") as file:
+                writer = csv.writer(file)
                 writer.writerows(updated_data)
-                return 1  # Student no. deleted successfully
+                return True
 
-        else:
-            return 2  # Student no. not found in our database
-
-    else:
-        return 2  # Student no. not found in our database
-
-
+    # Student no. not found in our database
+    return False  
