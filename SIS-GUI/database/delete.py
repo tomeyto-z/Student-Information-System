@@ -2,7 +2,7 @@
 import os
 import csv
 
-# di ko na alam paano paikliin to HAHHAHAHAHAHA if ever na maiikli pa go lang
+
 def delete(student_number):
     student_database = 'students.csv'
     student_found = False
@@ -28,4 +28,5 @@ def delete(student_number):
                 return True
 
     # Student no. not found in our database
-    return False  
+    return False
+

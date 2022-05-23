@@ -1,6 +1,7 @@
 # DATABASE TO ADD STUDENTS
 import csv
 
+
 def add(student_data):
     # the student database csv file
     student_database = 'students.csv'
